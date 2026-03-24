@@ -24,8 +24,13 @@ body {
   text-align: center;
 }
 
-.logo { height: 60px; margin: 0 auto 10px; display: block; }
-
+.logo { 
+  height: 60px; 
+  width: auto; 
+  margin: 0 auto 10px; 
+  display: block; 
+  object-fit: contain; /* Ensures the logo isn't squished */
+}
 .stats {
   display: flex;
   justify-content: space-around;
@@ -59,10 +64,12 @@ body {
 .water-can {
   width: 80%;
   height: 80%;
-  background-image: url('img/water-can.png');
+  /* Using the exact path from your sidebar */
+  background-image: url('img/water-can.png'); 
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
+  background-color: transparent; /* Remove the solid yellow color */
   cursor: pointer;
   animation: popUp 0.3s cubic-bezier(0.17, 0.67, 0.34, 1.5);
 }
