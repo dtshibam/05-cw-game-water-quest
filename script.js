@@ -7,14 +7,14 @@ let spawnInterval;
 
 const winMessages = [
   "Incredible! You've funded a clean water project!",
-  "Success! You're making a splash for global health!",
-  "Amazing! Your speed is bringing clean water to those in need!"
+  "Success! You're a clean water hero!",
+  "Amazing! Your speed is bringing water to those in need!"
 ];
 
 const lossMessages = [
   "Don't give up! Every drop counts.",
   "Almost there! Try again to help build the well.",
-  "The mission continues. Let's try for 20 again!"
+  "The mission continues. Let's try again!"
 ];
 
 function createGrid() {
@@ -35,8 +35,6 @@ function spawnCan() {
   const target = cells[Math.floor(Math.random() * 9)];
   const can = document.createElement('div');
   can.className = 'water-can';
-  
-  // REMOVED can.innerText = '🟡';  The CSS background image handles the visual now
   
   can.onclick = () => {
     if (!gameActive) return;
