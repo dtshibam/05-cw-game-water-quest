@@ -36,6 +36,8 @@ function spawnCan() {
   const can = document.createElement('div');
   can.className = 'water-can';
   
+  // REMOVED can.innerText = '🟡';  The CSS background image handles the visual now
+  
   can.onclick = () => {
     if (!gameActive) return;
     score++;
