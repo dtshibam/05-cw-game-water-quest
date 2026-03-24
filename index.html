@@ -1,23 +1,42 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width">
-  <title>Water Quest</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Water Quest - charity: water</title>
   <link href="style.css" rel="stylesheet" type="text/css" />
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 </head>
 <body>
+
   <div class="container">
-    <h1>Water Quest</h1>
-    <p class="game-instructions">Collect 20 items to complete the game!</p>
+    <header>
+      <img src="https://m.charitywater.org/assets/logo-can-8d650538f9f8c6f1f0.png" alt="charity water logo" class="logo">
+      <h1>Water Quest</h1>
+      <p class="game-instructions">Collect 20 jerry cans in 30 seconds to fund a well!</p>
+    </header>
+
     <div class="stats">
-      <p>Cans Collected: <span id="current-cans">0</span></p>
-      <p>Time Left: <span id="timer">30</span>s</p>
+      <div class="stat-item">
+        <p>Cans Collected</p>
+        <span id="current-cans">0</span>
+      </div>
+      <div class="stat-item">
+        <p>Time Left</p>
+        <span id="timer">30</span>s
+      </div>
     </div>
-    <div id="achievements" class="achievement"></div>
-    <div class="game-grid"></div>
-    <button id="start-game">Start Game</button>
+
+    <div id="achievements" class="achievement-message"></div>
+
+    <div class="game-grid">
+      </div>
+
+    <div class="controls">
+      <button id="start-game">Start Game</button>
+    </div>
   </div>
+
   <script src="script.js"></script>
 </body>
 </html>
