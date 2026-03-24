@@ -1,38 +1,85 @@
 const GOAL = 20;
-let score = 0, timeLeft = 30, gameActive = false, timerInterval, spawnInterval;
-const winMessages = ["Amazing! You're a clean water hero!", "Fantastic! A new well is on the way!"];
-const lossMessages = ["Almost there! Every drop counts.", "Try again! The community needs you."];
+let score = 0;
+let timeLeft = 30;
+let gameActive = false;
+let timerInterval;
+let spawnInterval;
 
-function startGame() {
-  if (gameActive) return;
-  score = 0; timeLeft = 30; gameActive = true;
-  document.getElementById('current-cans').innerText = score;
-  document.getElementById('achievements').innerText = '';
-  timerInterval = setInterval(updateTimer, 1000);
-  spawnInterval = setInterval(spawnCan, 1000);
+const winMessages = [
+  "Incredible! You've funded a clean water project!",
+  "Success! You're making a splash for global health!",
+  "Amazing! Your speed is bringing clean water to those in need!"
+];
+
+const lossMessages = [
+  "Don't give up! Every drop counts.",
+  "Almost there! Try again to help build the well.",
+  "The mission continues. Let's try for 20 again!"
+];
+
+function createGrid() {
+  const grid = document.querySelector('.game-grid');
+  grid.innerHTML = ''; 
+  for (let i = 0; i < 9; i++) {
+    const cell = document.createElement('div');
+    cell.className = 'grid-cell'; 
+    grid.appendChild(cell);
+  }
 }
 
 function spawnCan() {
-  const grid = document.querySelector('.game-grid');
-  grid.innerHTML = '';
-  for(let i=0; i<9; i++) grid.appendChild(Object.assign(document.createElement('div'), {className: 'grid-cell'}));
+  if (!gameActive) return;
   const cells = document.querySelectorAll('.grid-cell');
+  cells.forEach(cell => cell.innerHTML = '');
+
   const target = cells[Math.floor(Math.random() * 9)];
-  target.innerHTML = `<div class="water-can"></div>`;
-  target.onclick = () => { score++; document.getElementById('current-cans').innerText = score; target.innerHTML = ''; };
+  const can = document.createElement('div');
+  can.className = 'water-can';
+  
+  can.onclick = () => {
+    if (!gameActive) return;
+    score++;
+    document.getElementById('current-cans').innerText = score;
+    can.remove();
+  };
+  
+  target.appendChild(can);
 }
 
-function updateTimer() {
-  timeLeft--;
+function startGame() {
+  if (gameActive) return;
+  
+  score = 0;
+  timeLeft = 30;
+  gameActive = true;
+  
+  document.getElementById('current-cans').innerText = score;
   document.getElementById('timer').innerText = timeLeft;
-  if (timeLeft <= 0) endGame();
+  document.getElementById('achievements').innerText = '';
+  
+  createGrid();
+  timerInterval = setInterval(() => {
+    timeLeft--;
+    document.getElementById('timer').innerText = timeLeft;
+    if (timeLeft <= 0) endGame();
+  }, 1000);
+  
+  spawnInterval = setInterval(spawnCan, 900);
 }
 
 function endGame() {
-  gameActive = false; clearInterval(timerInterval); clearInterval(spawnInterval);
-  const msg = score >= GOAL ? winMessages[Math.floor(Math.random()*winMessages.length)] : lossMessages[Math.floor(Math.random()*lossMessages.length)];
-  document.getElementById('achievements').innerText = msg;
-  if (score >= GOAL) confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
+  gameActive = false;
+  clearInterval(timerInterval);
+  clearInterval(spawnInterval);
+  
+  const display = document.getElementById('achievements');
+  if (score >= GOAL) {
+    display.innerText = winMessages[Math.floor(Math.random() * winMessages.length)];
+    confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
+  } else {
+    display.innerText = lossMessages[Math.floor(Math.random() * lossMessages.length)];
+  }
 }
 
 document.getElementById('start-game').onclick = startGame;
+createGrid();
